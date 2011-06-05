@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Simple AJAX Jquery UI Dialog Demo With Parent | Flynsarmy</title>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/themes/smoothness/jquery-ui.css" />
+<script type='text/javascript' src='http://code.jquery.com/jquery-1.6.1.min.js'></script>
+<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js'></script>
+<script>
+	//Retrieve the HTML element used for the dialog
+	function get_ajax_dialog()
+	{
+		var $dialog = $("#ajax_dialog");
+		//No DOM element with this ID exists - create it
+		if ( !$dialog.size() )
+			$dialog = $('<div id="ajax_dialog" style="display:none;"></div>').appendTo('body');
+
+		return $dialog;
+	}
+
+	$(function() {
+
+		$('a.modal').live('click', function() {
+			var $dialog = get_ajax_dialog();
+			var $parent = $(this);
+
+			//load remote content
+			$dialog.load(
+				$parent.attr('href'),
+				{},
+				function(responseText, textStatus, XMLHttpRequest) {
+					if (textStatus == 'error')
+						$dialog.html(responseText);
+
+					$dialog.dialog({
+						modal: true,
+						title: $parent.attr('title'),
+						//Destroy on close. Required for some stacked modal functionality
+						close: function(ev, ui) {
+							$(this).remove();
+						}
+					}).data('parent', $parent); //Let the dialog know what opened it
+				}
+			);
+
+			return false;
+		});
+
+	});
+</script>
+</head>
+<body>
+	<a href="ajax/get_parent_text.html" class='modal' title="AJAX modal">Load Dialog With Parent</a>
+</body>
+</html>

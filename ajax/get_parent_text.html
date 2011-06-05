@@ -1,0 +1,15 @@
+<!-- This HTML is loaded via AJAX into a JQuery UI Dialog -->
+
+<script type='text/javascript'>
+	//Alert specified option of the btn's dialog.
+	function get_parent_text( btn )
+	{
+		alert(
+			'The link you clicked says: ' +
+			$(btn).closest('.ui-dialog-content').data('parent').html()
+		);
+	}
+</script>
+
+<!-- On click, alert the diloag's 'title' option -->
+<input type="button" value="Get Parent Link Text" onclick="get_parent_text(this)" />

@@ -1,0 +1,15 @@
+<!-- This HTML is loaded via AJAX into a JQuery UI Dialog -->
+
+<script type='text/javascript'>
+	//Alert specified option of the btn's dialog.
+	function get_option( btn, optionName )
+	{
+		alert(
+			'The "'+optionName+'" option of this dialog is: ' +
+			$(btn).closest('.ui-dialog-content').dialog('option', optionName)
+		);
+	}
+</script>
+
+<!-- On click, alert the diloag's 'title' option -->
+<input type="button" value="Get Title" onclick="get_option(this, 'title')" />
